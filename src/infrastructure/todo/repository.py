@@ -1,8 +1,11 @@
 import sqlite3
 from typing import List, Optional, TypedDict
 
-# 型の定義（TypeScriptの TodoRow に相当）
-class TodoRow(TypedDict):
+# domain/todo/types.pyに統一
+
+from pydantic import BaseModel
+
+class TodoRow(BaseModel):
     id: int
     title: str
     done: bool
@@ -23,14 +26,12 @@ conn.execute("""
 """)
 conn.commit()
 
-def _todo_from_sqlite_row(row: sqlite3.Row) -> TodoRow:
-    """DBの行データをTodoRow型に変換するヘルパー関数"""
-    return {
-        "id": row["id"],
-        "title": row["title"],
-        # 1ならTrue、0ならFalseに変換
-        "done": bool(row["done"]) 
-    }
+def _todo_from_sqlite_row(row) -> TodoRow:
+    return TodoRow(
+        id=row["id"],
+        title=row["title"],
+        done=bool(row["done"])
+    )
 
 def find_all_todos() -> List[TodoRow]:
     cursor = conn.execute("SELECT * FROM todos ORDER BY id DESC")
