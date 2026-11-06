@@ -1,11 +1,12 @@
-# sample-app
+# app-app
 
 システム部門研修で作成した TODO アプリです。
 
 ## 概要
 
-このアプリでは、TODO の追加・一覧表示・完了切替・削除ができます。
-フロントエンドは `public/index.html`、バックエンドは Express、データ保存は SQLite を使っています。
+Python と FastAPI を使用したバックエンドと、HTML / JavaScript によるフロントエンドで構成されています。データの保存には SQLite を使用しています。
+
+このアプリケーションでは、TODO の追加・一覧表示・完了状態の切り替え・削除ができます。
 
 ## 主な機能
 
@@ -15,7 +16,37 @@
 - TODO 削除
 - SQLite によるデータ永続化
 - タイトルのバリデーション
-- Vitest による API 結合テスト
+- pytest による API 結合テスト
+
+## 使用技術
+
+# 言語
+
+Python
+
+# バックエンド
+
+FastAPI
+
+# データベース
+
+SQLite
+
+# データモデル・バリデーション
+
+Pydantic
+
+# フロントエンド
+
+HTML / JavaScript
+
+# テスト
+
+pytest
+
+# パッケージ管理
+
+uv
 
 ## ディレクトリ構成
 app-app
@@ -51,33 +82,36 @@ app-app
 
 ## セットアップ方法
 
-このプロジェクトをローカル環境で動かすための手順です。
+1. 必要な環境
 
-### 1. 必要な環境
-- Python 3.10 以上
-- WSL (Ubuntu) 環境を推奨
+Python 3.11 以上
 
-### 2. 仮想環境の構築
-プロジェクトのディレクトリで仮想環境を作成し、有効化します。
+uv
 
-```bash
-# 仮想環境の作成
-python3 -m venv .venv
+WSL (Ubuntu) または Linux / macOS 環境
 
-# 仮想環境の有効化 (Linux/macOS)
-source .venv/bin/activate
+2. リポジトリのクローン
 
-## サーバー起動
+git clone https://github.com/sora-takochu/app-app.git
+cd app-app
 
-```bash
-fastapi dev main.py
-```
+3. 依存関係のインストール
 
-起動後ブラウザで次を開きます。
+uv sync
 
-```text
-http://127.0.0.1:8000
-```
+uv sync によって仮想環境 .venv が作成され、必要なライブラリがインストールされます。
+
+アプリケーションの起動
+
+以下のコマンドで開発サーバーを起動します。
+
+uv run fastapi dev main.py
+
+起動後、ブラウザで以下にアクセスします。
+
+アプリケーション：http://127.0.0.1:8000
+
+APIドキュメント：http://127.0.0.1:8000/docs
 
 ## APIの動作確認方法
 
@@ -137,3 +171,20 @@ ruff format .
 # 2. 静的解析と自動修正（未使用の変数や不要なインポートなどを検知・修正）
 ruff check . --fix
 ```
+### 開発環境
+
+# パッケージ管理
+
+Pythonのパッケージ管理には uv を使用しています。
+
+・pyproject.toml：プロジェクト情報と依存ライブラリの定義
+・uv.lock：依存ライブラリのバージョン固定
+
+# Git管理
+
+以下のファイルやディレクトリは Git の管理対象から除外しています。
+
+・.venv/：仮想環境
+・__pycache__/：Pythonのキャッシュ
+・*.pyc：Pythonのコンパイル済みファイル
+・.env：環境変数ファイル
