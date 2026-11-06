@@ -1,3 +1,9 @@
 node_modules/
 *.db
 .env
+# Python
+__pycache__/
+*.py[cod]
+
+# uv
+.venv/
